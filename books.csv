@@ -1,0 +1,10 @@
+bookID,field,bookName,price,stock,sold
+A001,Artificial Intelligence,Fundamentals of Artificial Intelligence,69.0,87,13
+A002,Artificial Intelligence,Basic of Artificial Intelligence,70.0,100,0
+A003,Artificial Intelligence,Machine Learning,55.0,100,0
+P001,Programming Language,C Language,58.0,100,0
+P002,Programming Language,Javascript,65.0,100,0
+P003,Programming Language,Python,89.0,100,0
+D001,Database,Database For Beginners,73.5,100,0
+D002,Database,MySQL,80.0,100,0
+D003,Database,Database Design,50.0,100,0
