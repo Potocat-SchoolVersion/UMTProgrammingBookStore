@@ -1,0 +1,109 @@
+import csv
+import os
+from book_controller import Book
+#Abstract Base Classes, import components from this module
+from abc import ABC, abstractmethod
+
+
+class bookStorage(ABC):
+    """Interface for book data operations"""
+    @abstractmethod
+    def load_books(self): pass
+    
+    @abstractmethod
+    def save_books(self): pass
+    
+    @abstractmethod
+    def get_book_by_id(self, book_id): pass
+    
+    @abstractmethod
+    def update_stock(self, book_id, quantity): pass
+    
+    @abstractmethod
+    def get_all_books(self): pass
+    
+    @abstractmethod
+    def get_books_by_field(self, field): pass
+
+
+class CSVBookRepository(bookStorage):    
+    def __init__(self, csv_file='books.csv'):
+        self.csv_file = csv_file
+        self.books = []
+        self.initialize_csv()
+        self.load_books()
+    
+    def initialize_csv(self):
+        """Create CSV with initial data"""
+        if not os.path.exists(self.csv_file):
+            initial_books = [
+                ['A001', 'Artificial Intelligence', 'Fundamentals of AI', 69.00, 100, 0],
+                ['A002', 'Artificial Intelligence', 'Basic AI', 70.00, 100, 0],
+                ['A003', 'Artificial Intelligence', 'Machine Learning', 55.00, 100, 0],
+                ['P001', 'Programming Language', 'C Language', 58.00, 100, 0],
+                ['P002', 'Programming Language', 'Javascript', 65.00, 100, 0],
+                ['P003', 'Programming Language', 'Python', 89.00, 100, 0],
+                ['D001', 'Database', 'Database For Beginners', 73.50, 100, 0],
+                ['D002', 'Database', 'MySQL', 80.00, 100, 0],
+                ['D003', 'Database', 'Database Design', 50.00, 100, 0]
+            ]
+            
+            with open(self.csv_file, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['bookID', 'field', 'bookName', 'price', 'stock', 'sold'])
+                writer.writerows(initial_books)
+    
+    def load_books(self):
+        """Load books"""
+        self.books = []
+        with open(self.csv_file, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                book = Book(
+                    row['bookID'],
+                    row['field'],
+                    row['bookName'],
+                    row['price'],
+                    row['stock'],
+                    row['sold']
+                )
+                self.books.append(book)
+        return self.books
+    
+    def save_books(self):
+        """Save books"""
+        with open(self.csv_file, 'w', newline='') as file:
+            fieldnames = ['bookID', 'field', 'bookName', 'price', 'stock', 'sold']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            for book in self.books:
+                writer.writerow(book.to_dict())
+    
+    def get_book_by_id(self, book_id):
+        """Get book by ID"""
+        for book in self.books:
+            if book.book_id.upper() == book_id.upper():
+                return book
+        return None
+    
+    def update_stock(self, book_id, quantity):
+        """Update stock & sold count"""
+        book = self.get_book_by_id(book_id)
+        if book and book.has_sufficient_stock(quantity):
+            book.update_stock(quantity)
+            self.save_books()
+            return True
+        return False
+    
+    def get_all_books(self):
+        """Get all books"""
+        return self.books
+    
+    def get_books_by_field(self, field):
+        """Get books by category"""
+        return [book for book in self.books if book.field == field]
+    
+    def get_all_fields(self):
+        """Get all unique fields, remove duplicate """
+        return list(set(book.field for book in self.books))
+
