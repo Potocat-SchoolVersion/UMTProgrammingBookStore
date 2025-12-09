@@ -8,7 +8,7 @@ from controller.order_controller import OrderController
 from controller.sales_controller import SalesController
 
 # Models/Repository
-from model.repository import CSVBookRepository
+from model.book_repository import CSVBookRepository
 
 # Views
 from view.login_view import LoginView
