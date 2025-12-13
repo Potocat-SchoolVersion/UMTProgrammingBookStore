@@ -1,5 +1,5 @@
-staff_id	name	staff_role	password	status
-admin	Bossku	manager	$2b$12$fr1jy6nwyg4Yh3AHEfDbqOUATBxb8sz9gdFgUC.4uac4V3AbrUQdy	active
-S001	Alice	staff	$2b$12$irizjpBEUKYrPz/q6UD1Leq2tAgAB7Uiqdh.09hY6t.A5HiXm3iS2	active
-S002	Johnson	staff	$2b$12$irizjpBEUKYrPz/q6UD1LekoAvMRFDSePzke8N9meEBKWhOpJGD5y	resigned
-S003	Duke	staff	$2b$12$irizjpBEUKYrPz/q6UD1LekoAvMRFDSePzke8N9meEBKWhOpJGD5y	active
+staff_id,name,staff_role,password,status
+admin,Bossku,manager,$2b$12$fr1jy6nwyg4Yh3AHEfDbqOUATBxb8sz9gdFgUC.4uac4V3AbrUQdy,active
+S001,Alice,staff,$2b$12$irizjpBEUKYrPz/q6UD1Leq2tAgAB7Uiqdh.09hY6t.A5HiXm3iS2,active
+S002,Johnson,staff,$2b$12$irizjpBEUKYrPz/q6UD1LekoAvMRFDSePzke8N9meEBKWhOpJGD5y,resigned
+S003,Duke,staff,$2b$12$irizjpBEUKYrPz/q6UD1LekoAvMRFDSePzke8N9meEBKWhOpJGD5y,active

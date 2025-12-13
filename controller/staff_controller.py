@@ -14,23 +14,21 @@ class StaffController:
 
     staff_list = []
     def __init__(self):
-        header, datas = read_file("staff", "csv")
-        pw_index = -1
-        try:
-            pw_index = header.index("password")
-        except ValueError:
-            print("Password field not found.")
-            return
-
-        for staff_data in datas:
-            #print(staff_data) #debug see only
-            byte_pw = bytes(staff_data[pw_index].encode('utf-8'))
-            staff = Staff(staff_data[0], staff_data[1], staff_data[2], byte_pw, staff_data[4])
+        reader = read_file("staff", "csv")
+        print(reader)
+        for staff_data in reader:
+            byte_pw = bytes(staff_data["password"].encode('utf-8'))
+            staff = Staff(staff_data["staff_id"],
+                          staff_data["name"],
+                          staff_data["staff_role"],
+                          byte_pw,
+                          staff_data["status"])
             self.staff_list.append(staff)
         print("Staff controller init successful.")
         
 
     def login(self, _id, password):
+        _staff = None
         role = None
         logged_in = False
         for staff in self.staff_list:
@@ -39,12 +37,16 @@ class StaffController:
                 result = bcrypt.checkpw(encoded_password, staff.getPassword())
                 if(result):
                     logged_in = True
+                    _staff = staff
                     role = staff.getStaffRole()
                     break
                 else: #break also since the id is matched
                     break
         return role, logged_in
+    
+    def get_staff_by_id(self, _id):
+        for staff in self.staff_list:
+            if staff.getStaffId() == _id:
+                return staff
 
-sc = StaffController()
-staffRole, logged_in = sc.login("S003","abcdef")
-print(staffRole, logged_in)
+

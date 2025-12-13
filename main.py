@@ -1,3 +1,4 @@
+# main.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -15,6 +16,7 @@ from view.login_view import LoginView
 from view.book_view import BooksView
 from view.order_view import OrderView
 from view.sales_view import SalesView
+from view.main_window import BookstoreApp
 
 
 def launch_bookstore(staff):
@@ -32,3 +34,4 @@ if __name__ == "__main__":
     login_root = tk.Tk()
     login_view = LoginView(login_root, staff_controller, launch_bookstore)
     login_root.mainloop()
+

@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from tools.face_recognition import face_comparision
 
 class LoginView:
     """Login screen view"""
@@ -118,17 +119,15 @@ class LoginView:
         
         # Attempt login
         role, logged_in = self.staff_controller.login(staff_id, password)
-        
         if logged_in:
-            staff = self.staff_controller.get_staff_by_id(staff_id)
-            self.root.destroy()
-            self.on_login_success(staff)
-        else:
-            staff = self.staff_controller.get_staff_by_id(staff_id)
-            if staff and staff.getStatus() != "active":
-                messagebox.showerror("Login Failed", 
-                                   f"Account is {staff.getStatus()}.")
+            is_same, dist = face_comparision(staff_id)
+            if is_same:
+                staff = self.staff_controller.get_staff_by_id(staff_id)
+
+                self.root.destroy()
+                self.on_login_success(staff)
             else:
-                messagebox.showerror("Login Failed", 
-                                   "Invalid Staff ID or Password")
+                messagebox.showerror("Unauthorised User", "Invalid Staff Identity.")
+        else:
+            messagebox.showerror("Login Failed", "Invalid Staff ID or Password")
             self.password_var.set("")

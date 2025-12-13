@@ -1,3 +1,5 @@
+from model.book import Book
+
 class SalesController:
     """sales analytics"""
     
