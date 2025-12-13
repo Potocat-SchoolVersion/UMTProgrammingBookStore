@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import threading
 import time
+import cv2
 
 from view.base_view import BaseView
 from model.discount import Discount
